@@ -1,0 +1,43 @@
+generated: '2026-08-26'
+method: searched
+source: https://modretro.com/agents.md
+note: >-
+  ModRetro states that its agent endpoint is rate-limited and names the exhaustion status, but
+  publishes no number, no window and no response headers. Two hard numeric caps do exist and are
+  published — in the MCP tool schemas rather than in prose — so they are recorded as limits.
+limit_count: 2
+limits:
+  - scope: per-endpoint
+    surface: 'POST https://modretro.com/api/ucp/mcp — lookup_catalog'
+    limit: 10
+    unit: ids per request
+    window: per request
+    burst: null
+    status_on_exhaustion: null
+    source: 'mcp/modretro-mcp-tools.json — lookup_catalog description: "Maximum 10 IDs per request."'
+  - scope: per-endpoint
+    surface: 'POST https://modretro.com/api/ucp/mcp — search_catalog'
+    limit: 10
+    unit: results per page (default)
+    window: per request
+    burst: null
+    minimum: 1
+    status_on_exhaustion: null
+    source: 'mcp/modretro-mcp-tools.json — catalog.pagination.limit (default 10, minimum 1)'
+undocumented:
+  - scope: per-ip
+    surface: 'POST https://modretro.com/api/ucp/mcp'
+    limit: null
+    window: null
+    status_on_exhaustion: 429
+    statement: 'Respect rate limits. The MCP endpoint is rate-limited per IP. Back off on 429 responses.'
+    source: https://modretro.com/agents.md
+    note: >-
+      An agent is told a limit exists and which status to back off on, but not the budget or the
+      window — it can only discover the ceiling by hitting it.
+response_headers:
+  published: false
+  checked: ['X-RateLimit-*', 'RateLimit-*', 'Retry-After']
+  note: >-
+    Not published in /agents.md or /llms.txt, and not observable without exhausting a live commerce
+    endpoint, which this pipeline does not do.

@@ -1,0 +1,75 @@
+generated: '2026-08-26'
+method: derived
+source: mcp/modretro-mcp-tools.json
+note: >-
+  Derived from the JSON Schema 2020-12 inputSchemas returned by the live MCP tools/list — there is
+  no OpenAPI to walk $refs in. Only entities and fields that appear in those schemas are recorded;
+  response-side shapes are governed by the UCP capability schemas at ucp.dev and are not restated
+  here. Identifiers are Shopify global ids (gid://shopify/<Type>/<id>).
+entities:
+  - name: Cart
+    id_format: 'gid://shopify/Cart/...'
+    operations: [create_cart, get_cart, update_cart, cancel_cart]
+    fields: [line_items, buyer, context, attribution, fulfillment, discounts]
+  - name: Checkout
+    id_format: 'gid://shopify/Checkout/...'
+    operations: [create_checkout, get_checkout, update_checkout, complete_checkout, cancel_checkout]
+    fields: [payment, line_items, buyer, context, attribution, cart_id, fulfillment, discounts]
+  - name: Order
+    id_format: 'gid://shopify/Order/...'
+    operations: [get_order]
+    note: 'Read-only in this API. Produced by complete_checkout, which returns an order ID and Thank You Page URL.'
+  - name: Product
+    id_format: 'gid://shopify/Product/...'
+    operations: [search_catalog, lookup_catalog, get_product]
+  - name: ProductVariant
+    id_format: 'gid://shopify/ProductVariant/...'
+    operations: [lookup_catalog, get_product]
+    note: 'lookup_catalog returns the parent product with the exact variant; a product-id input resolves to the featured variant.'
+  - name: LineItem
+    fields: [id, quantity, 'item.id (ProductVariant ID)']
+  - name: Buyer
+    fields: [email, phone_number]
+  - name: BuyerContext
+    fields: [address_country, address_region, postal_code, intent, language, currency, eligibility]
+  - name: Attribution
+    fields: [referring_domain, click_id_tag, click_id_value, activity_id_tag, activity_id_value, utm_campaign, utm_source, utm_medium, utm_content, utm_term]
+  - name: Fulfillment
+    fields: ['methods[].type', 'methods[].line_item_ids', 'methods[].selected_destination_id', 'methods[].destinations[]', 'methods[].groups[]']
+    config:
+      allows_multi_destination_shipping: false
+      allows_method_combinations: [[shipping]]
+      source: well-known/modretro-ucp.json
+  - name: Destination
+    fields: [id, first_name, last_name, phone_number, street_address, extended_address, address_locality, address_region, postal_code, address_country]
+  - name: Discount
+    fields: ['codes[] (case-insensitive; a new submission replaces the previous set)']
+  - name: PaymentInstrument
+    fields: [id, handler_id, type, billing_address, credential, display, selected]
+    note: 'credential.token is opaque; credential.type is a namespaced dot-notation token type.'
+  - name: PaymentHandler
+    source: well-known/modretro-ucp.json
+    instances:
+      - {id: gpay, handler: com.google.pay, merchant_name: ModRetro, merchant_origin: modretro.com, networks: [VISA, MASTERCARD, AMEX, DISCOVER]}
+      - {id: shopify.card, handler: dev.shopify.card, brands: [visa, master, american_express, discover, diners_club]}
+      - {id: shop_pay, handler: dev.shopify.shop_pay}
+  - name: Money
+    fields: [amount, currency]
+    note: 'amount is an integer in ISO 4217 minor units.'
+relationships:
+  - {from: Cart,              to: LineItem,          type: has_many,   via: line_items}
+  - {from: Cart,              to: Buyer,             type: has_one,    via: buyer}
+  - {from: Cart,              to: BuyerContext,      type: has_one,    via: context}
+  - {from: Cart,              to: Attribution,       type: has_one,    via: attribution}
+  - {from: Cart,              to: Fulfillment,       type: has_one,    via: fulfillment}
+  - {from: Cart,              to: Discount,          type: has_one,    via: discounts}
+  - {from: Checkout,          to: Cart,              type: belongs_to, via: cart_id}
+  - {from: Checkout,          to: LineItem,          type: has_many,   via: line_items}
+  - {from: Checkout,          to: PaymentInstrument, type: has_many,   via: payment.instruments}
+  - {from: Checkout,          to: Fulfillment,       type: has_one,    via: fulfillment}
+  - {from: Checkout,          to: Order,             type: has_one,    via: 'complete_checkout result (order ID)'}
+  - {from: LineItem,          to: ProductVariant,    type: belongs_to, via: item.id}
+  - {from: ProductVariant,    to: Product,           type: belongs_to, via: 'parent product returned by lookup_catalog'}
+  - {from: Fulfillment,       to: Destination,       type: has_many,   via: 'methods[].destinations'}
+  - {from: PaymentInstrument, to: PaymentHandler,    type: belongs_to, via: handler_id}
+  - {from: PaymentInstrument, to: Destination,       type: has_one,    via: billing_address}

@@ -1,23 +1,134 @@
 aid: modretro
 name: ModRetro
-description: 'ModRetro is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  ModRetro Inc. designs and sells modern recreations of classic game consoles — the Chromatic, an
+  FPGA-based Game Boy-compatible handheld, and the M64, a Nintendo 64-style console — along with
+  physical cartridges, controllers and accessories. It is a consumer hardware company, not a
+  software vendor, and it publishes no developer portal, no OpenAPI and no SDKs. It does, however,
+  run a live agent-facing commerce API: its Shopify storefront at modretro.com serves a Universal
+  Commerce Protocol (UCP 2026-04-08) merchant profile at /.well-known/ucp and a remote Model Context
+  Protocol server at /api/ucp/mcp exposing 13 catalog, cart, checkout and order tools, advertised
+  from its own robots.txt, /agents.md and /llms.txt, with idempotency required on checkout
+  completion and an explicit human-approval rule on payment. Separately, ModRetro publishes the
+  Chromatic's FPGA and MCU design files on GitHub under GPL-3.0 with a dated firmware changelog.
+image: https://modretro.com/cdn/shop/files/MR_SocialShare_ModRetro.png?v=1780328409&width=1200
 url: https://raw.githubusercontent.com/api-evangelist/modretro/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-26'
 modified: '2026-08-26'
 tags:
 - Company
-apis: []
+- Consumer Electronics
+- Gaming
+- Retro Gaming
+- Hardware
+- E-Commerce
+- Agentic Commerce
+- Model Context Protocol
+- Universal Commerce Protocol
+- Open Source Hardware
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- name: ModRetro Agent Commerce API (UCP over MCP)
+  description: >-
+    ModRetro's agent-facing commerce API. A remote Model Context Protocol server implementing the
+    Universal Commerce Protocol shopping service (versions 2026-04-08 and 2026-01-23), exposing 13
+    tools across catalog search and lookup, cart, checkout and order. initialize and tools/list
+    answer anonymously; every tools/call requires a fetchable UCP agent-profile URI, and the order
+    and checkout tools additionally require a Shopify agent JWT. complete_checkout requires an
+    idempotency key and, per ModRetro's own robots.txt and /agents.md, explicit contemporaneous
+    human approval of payment.
+  humanURL: https://modretro.com/agents.md
+  baseURL: https://modretro.com/api/ucp/mcp
+  tags:
+  - Agentic Commerce
+  - Model Context Protocol
+  - Universal Commerce Protocol
+  - E-Commerce
+  - Catalog
+  - Checkout
+  properties:
+  - type: MCPServer
+    url: mcp/modretro-mcp.yml
+  - type: Documentation
+    url: https://modretro.com/agents.md
+  - type: Authentication
+    url: authentication/modretro-authentication.yml
+  - type: OAuthScopes
+    url: scopes/modretro-scopes.yml
+  - type: RateLimits
+    url: rate-limits/modretro-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/modretro-problem-types.yml
+  - type: DataModel
+    url: data-model/modretro-data-model.yml
 common:
+- type: DomainSecurity
+  url: security/modretro-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/modretro_stock/
+  url: https://modretro.com/
+- type: Documentation
+  url: https://modretro.com/agents.md
+- type: LLMsTxt
+  url: llms/modretro-llms.txt
+- type: MCPServer
+  url: mcp/modretro-mcp.yml
+- type: WellKnown
+  url: well-known/modretro-well-known.yml
+- type: Authentication
+  url: authentication/modretro-authentication.yml
+- type: OAuthScopes
+  url: scopes/modretro-scopes.yml
+- type: Conventions
+  url: conventions/modretro-conventions.yml
+- type: Idempotency
+  url: conventions/modretro-conventions.yml
+- type: RateLimits
+  url: rate-limits/modretro-rate-limits.yml
+- type: ErrorCatalog
+  url: errors/modretro-problem-types.yml
+- type: Conformance
+  url: conformance/modretro-conformance.yml
+- type: DataModel
+  url: data-model/modretro-data-model.yml
+- type: Lifecycle
+  url: lifecycle/modretro-lifecycle.yml
+- type: ChangeLog
+  url: changelog/modretro-changelog.yml
+- type: Packages
+  url: packages/modretro-packages.yml
+- type: Plans
+  url: plans/modretro-plans-pricing.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: GitHubOrganization
+  url: https://github.com/ModRetro
+- type: Support
+  url: https://support.modretro.com/
+- type: HelpCenter
+  url: https://support.modretro.com/
+- type: Community
+  url: https://forums.modretro.com/
+- type: Blog
+  url: https://modretro.com/blogs/blog
+- type: BlogRSS
+  url: https://modretro.com/blogs/blog.atom
+- type: Pricing
+  url: https://modretro.com/collections/all
+- type: SignUp
+  url: https://modretro.com/customer_authentication/redirect?locale=en&region_country=US
+- type: TermsOfService
+  url: https://modretro.com/policies/terms-of-service
+- type: PrivacyPolicy
+  url: https://modretro.com/policies/privacy-policy
+x-enrichment:
+  date: '2026-08-26'
+  status: enriched
+  artifacts_added: 24
+  pass: local-v1

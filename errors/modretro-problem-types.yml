@@ -1,0 +1,45 @@
+generated: '2026-08-26'
+method: probed
+source: https://modretro.com/api/ucp/mcp
+format: jsonrpc-2.0
+note: >-
+  Not RFC 9457 — ModRetro's only API is JSON-RPC over MCP, so errors arrive as JSON-RPC 2.0 error
+  objects with a UCP-specific `data` payload. There is no OpenAPI to derive 4xx/5xx responses from
+  and ModRetro publishes no error reference, so every entry below was observed live against the
+  production endpoint with anonymous, non-mutating calls.
+envelope:
+  shape: '{"jsonrpc":"2.0","id":<id>,"error":{"code":<int>,"message":<string>,"data":<object|string>}}'
+  data_fields: [code, content, continue_url]
+problems:
+  - jsonrpc_code: -32001
+    http_status: 422
+    message: UCP discovery failed
+    data_code: invalid_profile_url
+    title: Agent profile URI missing or unfetchable
+    detail: 'Unable to fetch agent profile: Missing profile uri'
+    remediation: >-
+      Supply meta.ucp-agent.profile on every tools/call as a resolvable URI describing the calling
+      agent. The server fetches it; an unreachable URI fails the same way a missing one does.
+    continue_url: https://modretro-dev.myshopify.com/
+    observed: '2026-08-26'
+    source_operation: 'mcp/modretro-mcp.yml#tools-list (probed with method no_such_method)'
+  - jsonrpc_code: -32000
+    http_status: 403
+    message: AuthenticationRequired
+    title: Valid JWT required for this tool
+    detail: 'Unauthorized: A valid JWT is required to call get_order.'
+    remediation: >-
+      Obtain a Shopify agent token per https://shopify.dev/docs/agents/get-started/authentication and
+      send it on the call. Applies to the order and checkout tools; catalog tools do not require it.
+    observed: '2026-08-26'
+    source_operation: 'mcp/modretro-mcp-tools.json#get_order'
+in_band_errors:
+  - operation: complete_checkout
+    note: >-
+      complete_checkout's own description says it returns "order ID, Thank You Page URL, or any
+      errors encountered" — completion failures are returned in the tool result, not as a JSON-RPC
+      error. The result schema for those errors is not published; it is defined by the UCP checkout
+      capability schema at https://ucp.dev/2026-04-08/schemas/shopping/checkout.json.
+not_probed:
+  - 'Rate-limit exhaustion (429) — documented by ModRetro but not induced; exhausting a live commerce endpoint is out of bounds for this pipeline.'
+  - 'Checkout/payment failure codes — reachable only by authenticating and transacting.'

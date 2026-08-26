@@ -1,0 +1,60 @@
+generated: '2026-08-26'
+method: searched
+source: 'registry search — npm, PyPI, crates.io; https://github.com/ModRetro'
+package_count: 0
+official_sdk_count: 0
+packages: []
+note: >-
+  ModRetro ships no client libraries. Its API is called over MCP with a plain JSON-RPC POST and
+  needs no SDK, and no first-party wrapper exists in any registry. NOT emitting an SDKs pointer —
+  there is nothing to point at. Recorded as a checked zero, not an unchecked gap.
+registries_probed:
+  - {registry: npm, query: modretro, url: 'https://registry.npmjs.org/-/v1/search?text=modretro', results: 0, checked: '2026-08-26'}
+  - {registry: pypi, package: modretro, url: 'https://pypi.org/pypi/modretro/json', http_status: 404, checked: '2026-08-26'}
+  - {registry: crates.io, query: modretro, url: 'https://crates.io/api/v1/crates?q=modretro', results: 0, checked: '2026-08-26'}
+first_party_software:
+  note: >-
+    ModRetro does ship first-party software, but none of it is a registry-distributed API client, so
+    none of it belongs in packages[]. Listed here so the zero above is not mistaken for "publishes
+    nothing".
+  items:
+    - name: MR Updater
+      kind: desktop firmware updater
+      registry: null
+      version: null
+      published: null
+      url: https://support.modretro.com/en_us/chromatic-firmware-updater-ryhoYnzCx.md
+      official: true
+      note: 'Windows/macOS binary distributed from the support site; no package registry, no pinned version in the URL.'
+    - name: oss-chromatic-console-fpga
+      kind: hardware design source (Verilog)
+      registry: github
+      version: v18.8
+      published: '2025-12-25'
+      url: https://github.com/ModRetro/oss-chromatic-console-fpga
+      license: GPL-3.0
+      official: true
+    - name: oss-chromatic-console-mcu
+      kind: hardware design source (C)
+      registry: github
+      version: null
+      published: '2025-12-25'
+      url: https://github.com/ModRetro/oss-chromatic-console-mcu
+      official: true
+      note: 'No tagged releases; published date is the last push to the default branch.'
+    - name: oss-m64-console
+      kind: hardware design source
+      registry: github
+      version: null
+      published: '2026-08-13'
+      url: https://github.com/ModRetro/oss-m64-console
+      official: true
+      note: 'Placeholder repository — description reads "Coming soon!".'
+    - name: oss-m64-controller
+      kind: hardware design source
+      registry: github
+      version: null
+      published: '2026-07-15'
+      url: https://github.com/ModRetro/oss-m64-controller
+      official: true
+      note: 'Placeholder repository — description reads "Coming soon!".'

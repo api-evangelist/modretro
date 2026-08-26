@@ -1,0 +1,86 @@
+generated: '2026-08-26'
+method: probed
+source: https://modretro.com/.well-known/ucp
+note: >-
+  Asserted from documents ModRetro serves and from live responses on its own endpoints. ModRetro
+  publishes no compliance program, certifications or trust center of its own — the Shopify platform
+  underneath it does, but that is Shopify's posture and is not claimed here on ModRetro's behalf.
+standards:
+  - id: ucp
+    name: Universal Commerce Protocol
+    version: '2026-04-08'
+    conforms: true
+    domain_standard: true
+    market: agentic commerce / retail
+    evidence: >-
+      https://modretro.com/.well-known/ucp returns a UCP merchant profile declaring version
+      2026-04-08 (and 2026-01-23), the dev.ucp.shopping service over transport "mcp", and the
+      capabilities dev.ucp.shopping.{checkout,cart,order,fulfillment,discount,catalog.search,
+      catalog.lookup} plus the dev.shopify.catalog extension. The tool names returned by the live
+      tools/list are the UCP shopping tool names, and search_catalog's own description states
+      "Response conforms to the UCP catalog search capability (dev.ucp.shopping.catalog.search)".
+    spec: https://ucp.dev/2026-04-08/specification/overview/
+  - id: mcp
+    name: Model Context Protocol
+    version: '2024-11-05'
+    conforms: true
+    evidence: 'POST initialize returned protocolVersion 2024-11-05, serverInfo {name: universal-commerce, version: 0.1.0}, and capabilities for tools, prompts, resources and logging.'
+  - id: jsonrpc-2.0
+    conforms: true
+    evidence: 'Every request and response on /api/ucp/mcp carries "jsonrpc":"2.0" with id correlation; failures use the standard error object.'
+  - id: json-schema-2020-12
+    conforms: true
+    evidence: 'All 13 tool inputSchemas declare $schema https://json-schema.org/draft/2020-12/schema.'
+  - id: oidc-discovery
+    name: OpenID Connect Discovery 1.0
+    conforms: true
+    evidence: 'https://modretro.com/.well-known/openid-configuration returns issuer, authorization_endpoint, token_endpoint, jwks_uri, claims_supported and id_token_signing_alg_values_supported RS256.'
+  - id: rfc8414
+    name: OAuth 2.0 Authorization Server Metadata
+    conforms: true
+    evidence: 'https://modretro.com/.well-known/oauth-authorization-server returns the RFC 8414 metadata document (HTTP 200).'
+  - id: rfc7636
+    name: 'OAuth 2.0 PKCE'
+    conforms: true
+    evidence: 'code_challenge_methods_supported ["S256"] in the authorization-server metadata.'
+  - id: rfc7523
+    name: 'JWT profile for OAuth 2.0 client authentication and authorization grants'
+    conforms: true
+    evidence: 'grant_types_supported includes urn:ietf:params:oauth:grant-type:jwt-bearer.'
+  - id: iso-4217
+    conforms: true
+    evidence: 'Prices are integers in ISO 4217 minor units paired with a currency code, stated in every tool description.'
+  - id: iso-3166-1-alpha-2
+    conforms: true
+    evidence: 'catalog.context.address_country is documented as ISO 3166-1 alpha-2.'
+  - id: bcp47
+    conforms: true
+    evidence: 'catalog.context.language is documented as an IETF BCP 47 language tag.'
+  - id: llmstxt
+    name: llms.txt
+    conforms: true
+    evidence: 'https://modretro.com/llms.txt returns 200 text/markdown, mirroring /agents.md.'
+  - id: rfc9457
+    name: 'Problem Details for HTTP APIs'
+    conforms: false
+    evidence: 'No application/problem+json anywhere; the API is JSON-RPC and uses the JSON-RPC error object instead.'
+  - id: rfc9116
+    name: security.txt
+    conforms: false
+    evidence: 'https://modretro.com/.well-known/security.txt returned 404.'
+  - id: a2a
+    name: 'A2A Agent Card'
+    conforms: false
+    evidence: '/.well-known/agent-card.json and /.well-known/agent.json both returned 404 with HTML bodies on modretro.com, support.modretro.com and forums.modretro.com.'
+  - id: openapi
+    conforms: false
+    evidence: 'No OpenAPI/Swagger document at any probed path on any ModRetro host — see x-coverage in apis.yml.'
+  - id: asyncapi
+    conforms: false
+    evidence: 'ModRetro publishes no event, streaming or webhook surface of its own.'
+compliance_program:
+  published: false
+  note: >-
+    No trust center, no named certifications, no vulnerability-disclosure policy on any ModRetro
+    host. Deliberately not claiming Shopify's SOC 2 / PCI posture on ModRetro's behalf — the
+    merchant does not publish it, and inheriting a platform's certifications is not a provider claim.

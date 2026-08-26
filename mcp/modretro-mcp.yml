@@ -1,0 +1,70 @@
+generated: '2026-08-26'
+method: probed
+source: https://modretro.com/api/ucp/mcp
+status: published
+note: >-
+  ModRetro publishes a live, remote MCP server for agent-driven commerce on its own domain. It is
+  discovered from three first-party surfaces ModRetro serves: robots.txt, /agents.md and /llms.txt
+  all name https://modretro.com/api/ucp/mcp, and /.well-known/ucp declares it as the
+  dev.ucp.shopping service transport. The server is a Shopify Universal Commerce Protocol (UCP)
+  implementation scoped to ModRetro's store (shop id 82920341806); the /.well-known/ucp canonical
+  endpoint form is https://modretro-dev.myshopify.com/api/ucp/mcp, which is the same server on the
+  shop's myshopify hostname.
+
+deployment:
+  mode: remote
+  endpoint: https://modretro.com/api/ucp/mcp
+  auth: oauth
+  verified: probed
+
+server:
+  name: universal-commerce
+  version: 0.1.0
+  transport: http
+  url: https://modretro.com/api/ucp/mcp
+  canonical_url: https://modretro-dev.myshopify.com/api/ucp/mcp
+  protocol_version: '2024-11-05'
+  capabilities:
+    tools: {listChanged: true}
+    prompts: {listChanged: true}
+    resources: {listChanged: true}
+    logging: {}
+  protocol: Universal Commerce Protocol (UCP)
+  ucp_versions: ['2026-04-08', '2026-01-23']
+
+authentication:
+  discovery: anonymous
+  notes: >-
+    initialize and tools/list answer anonymously (HTTP 200). Every tools/call requires
+    meta.ucp-agent.profile, a fetchable UCP agent-profile URI — omitting or failing it returns
+    JSON-RPC -32001 "UCP discovery failed" with data.code invalid_profile_url (HTTP 422). Order and
+    checkout tools additionally require a Shopify agent JWT — get_order without one returns
+    JSON-RPC -32000 "AuthenticationRequired" (HTTP 403) pointing at
+    https://shopify.dev/docs/agents/get-started/authentication.
+  buyer_approval_required: true
+  buyer_approval_note: >-
+    ModRetro's robots.txt and /agents.md both state that checkout, payment and order placement must
+    not be completed by an agent without explicit, contemporaneous human approval.
+
+tools_source: mcp/modretro-mcp-tools.json
+tool_count: 13
+tools:
+  - {name: search_catalog,   category: catalog,  description: 'Search products with natural-language queries and/or filters; cursor-paginated.'}
+  - {name: lookup_catalog,   category: catalog,  description: 'Resolve up to 10 product or variant gids in one request.'}
+  - {name: get_product,      category: catalog,  description: 'Full product detail, variants, exact pricing and real-time availability.'}
+  - {name: create_cart,      category: cart,     description: 'Create a cart.'}
+  - {name: get_cart,         category: cart,     description: 'Read cart contents.'}
+  - {name: update_cart,      category: cart,     description: 'Update a cart.'}
+  - {name: cancel_cart,      category: cart,     description: 'Cancel a cart.'}
+  - {name: create_checkout,  category: checkout, description: 'Create a checkout from a cart.'}
+  - {name: get_checkout,     category: checkout, description: 'Read a checkout with line items, totals, discounts and taxes.'}
+  - {name: update_checkout,  category: checkout, description: 'Update a checkout — shipping address, fulfillment method, payment instruments.'}
+  - {name: complete_checkout, category: checkout, description: 'Finalize the purchase. Requires meta.idempotency-key and buyer approval of payment.'}
+  - {name: cancel_checkout,  category: checkout, description: 'Cancel a checkout.'}
+  - {name: get_order,        category: order,    description: 'Read order detail. Requires a Shopify agent JWT.'}
+
+x-evidence:
+  - {fetched: '2026-08-26', method: 'POST tools/list',  url: 'https://modretro.com/api/ucp/mcp', http_status: 200, note: '13 tools with JSON Schema 2020-12 inputSchema, saved verbatim'}
+  - {fetched: '2026-08-26', method: 'POST initialize',  url: 'https://modretro.com/api/ucp/mcp', http_status: 200}
+  - {fetched: '2026-08-26', method: 'POST tools/call get_order', url: 'https://modretro.com/api/ucp/mcp', http_status: 403, note: 'AuthenticationRequired'}
+  - {fetched: '2026-08-26', method: 'GET', url: 'https://modretro.com/.well-known/ucp', http_status: 200}

@@ -64,5 +64,20 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-ModRetro is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/modretro_stock/
+ModRetro Inc. designs and sells modern recreations of classic game consoles — the Chromatic, an
+FPGA-based Game Boy-compatible handheld, and the M64, a Nintendo 64-style console — along with
+physical cartridges, controllers and accessories.
+
+ModRetro publishes no developer portal, no OpenAPI and no SDKs. It does run a live agent-facing
+commerce API: its storefront at modretro.com serves a Universal Commerce Protocol (UCP `2026-04-08`)
+merchant profile at `/.well-known/ucp` and a remote Model Context Protocol server at
+`/api/ucp/mcp` exposing 13 catalog, cart, checkout and order tools — advertised from its own
+`robots.txt`, `/agents.md` and `/llms.txt`, with an idempotency key required on checkout completion
+and an explicit human-approval rule on payment. It also publishes the Chromatic's FPGA and MCU
+design files on GitHub under GPL-3.0, with a dated firmware changelog.
+
+- Website: https://modretro.com/
+- Agent instructions: https://modretro.com/agents.md
+- Support: https://support.modretro.com/
+- Community: https://forums.modretro.com/
+- Source: https://github.com/ModRetro

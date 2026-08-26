@@ -1,0 +1,34 @@
+generated: '2026-08-26'
+method: probed
+source: https://modretro.com/.well-known/oauth-authorization-server
+note: >-
+  Derived from the RFC 8414 / OIDC discovery documents ModRetro serves at its own domain — there is
+  no OpenAPI to derive from, and derive-oauth-scopes.py therefore has no input. The scope set is
+  Shopify Customer Accounts scoped to ModRetro's shop (issuer 82920341806); ModRetro publishes no
+  scope reference page of its own.
+schemes:
+  - name: ShopifyCustomerAccountOIDC
+    source: well-known/modretro-oauth-authorization-server.json
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://orders.modretro.com/authentication/oauth/authorize
+        tokenUrl: https://orders.modretro.com/authentication/oauth/token
+        pkce: S256
+scopes:
+  - scope: openid
+    description: Standard OpenID Connect scope; issues an ID token for the authenticated customer.
+    flows: [authorizationCode]
+    sources: [well-known/modretro-oauth-authorization-server.json]
+  - scope: email
+    description: Releases the customer's email and email_verified claims.
+    flows: [authorizationCode]
+    sources: [well-known/modretro-oauth-authorization-server.json]
+  - scope: 'customer-account-api:full'
+    description: Full access to the Shopify Customer Account API for the signed-in ModRetro customer (orders, addresses, profile).
+    flows: [authorizationCode]
+    sources: [well-known/modretro-oauth-authorization-server.json]
+  - scope: 'customer-account-mcp-api:full'
+    description: Full access to the Shopify Customer Account MCP API — the authenticated, customer-scoped agent surface, distinct from the anonymous UCP commerce MCP endpoint.
+    flows: [authorizationCode]
+    sources: [well-known/modretro-oauth-authorization-server.json]
+scope_count: 4

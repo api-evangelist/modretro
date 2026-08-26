@@ -1,0 +1,22 @@
+generated: '2026-08-26'
+method: generated
+source: mcp/modretro-mcp-tools.json
+note: >-
+  Grounded in the 13 tool names returned by a live tools/list against
+  https://modretro.com/api/ucp/mcp on 2026-08-26 — every operation named in these skills exists in
+  mcp/modretro-mcp-tools.json. ModRetro publishes no AGENTS.md skill file of its own; it publishes
+  /agents.md, which is prose guidance rather than a packaged skill, and is saved verbatim at
+  llms/modretro-agents.md.
+skills:
+  - file: modretro-catalog-lookup.md
+    name: Look up ModRetro products, prices and availability
+    api: mcp/modretro-mcp.yml
+    operations: [search_catalog, lookup_catalog, get_product]
+  - file: modretro-buy-a-console.md
+    name: Buy a ModRetro console on a buyer's behalf
+    api: mcp/modretro-mcp.yml
+    operations: [search_catalog, get_product, create_cart, update_cart, create_checkout, update_checkout, complete_checkout, cancel_checkout, cancel_cart, get_order]
+  - file: modretro-order-status.md
+    name: Check a ModRetro order and explain what can still be changed
+    api: mcp/modretro-mcp.yml
+    operations: [get_order]

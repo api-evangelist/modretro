@@ -1,0 +1,35 @@
+generated: '2026-08-26'
+method: probed
+source: https://modretro.com/.well-known/ucp
+versioning:
+  scheme: dated-protocol-version
+  current: '2026-04-08'
+  supported: ['2026-04-08', '2026-01-23']
+  versioned_documents:
+    '2026-04-08': https://modretro-dev.myshopify.com/.well-known/ucp/2026-04-08
+    '2026-01-23': https://modretro-dev.myshopify.com/.well-known/ucp/2026-01-23
+  note: >-
+    Version is negotiated by the UCP protocol, not by a ModRetro-owned scheme. Two versions are
+    served concurrently, which is a real overlap window even though no policy text describes it.
+deprecation:
+  policy_url: null
+  sunset_header: null
+  note: >-
+    No deprecation policy, no Sunset/Deprecation header support advertised, and no statement about
+    how long 2026-01-23 will keep answering. NOT emitting a Deprecation pointer.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  probed:
+    - {url: 'https://status.modretro.com/', result: 'no DNS'}
+  note: 'No status page found on any ModRetro host. NOT emitting a StatusPage pointer.'
+deprecated_operations: []
+product_lifecycle:
+  note: >-
+    ModRetro's shipped lifecycle discipline is in firmware, not in the API. The Chromatic FPGA and
+    MCU designs are versioned, tagged and changelogged in public on GitHub under GPL-3.0, and a
+    Known Issues page tracks defect status per firmware release.
+  firmware_changelog: changelog/modretro-changelog.yml
+  known_issues: https://support.modretro.com/en_us/chromatic-known-issues-HJfcthzCZg.md

@@ -1,0 +1,26 @@
+generated: '2026-08-26'
+method: searched
+source: https://modretro.com/agents.md
+plan_count: 0
+note: >-
+  ModRetro publishes no API plans, tiers, quotas or developer pricing of any kind. Its agent surface
+  (the UCP/MCP commerce endpoint, the storefront product JSON, /agents.md and /llms.txt) is free and
+  open to any agent that supplies a UCP agent profile; the only thing priced on modretro.com is
+  merchandise — consoles, cartridges and accessories sold through the Shopify storefront. There is
+  no developer portal, no API key issuance, and no "contact sales" API gate either, so this is a
+  genuine zero rather than an enterprise wall.
+plans: []
+commercial_model: 'Free agent access to the commerce API; revenue is the merchandise sold through it.'
+product_pricing:
+  published: true
+  url: https://modretro.com/collections/all
+  machine_readable:
+    - 'https://modretro.com/products.json'
+    - 'https://modretro.com/collections/{handle}/products.json'
+    - 'MCP search_catalog / get_product (exact pricing, ISO 4217 minor units)'
+  note: 'Product prices are machine-readable; API pricing does not exist because API access is not sold.'
+checked: '2026-08-26'
+evidence:
+  - {url: 'https://modretro.com/agents.md', http_status: 200}
+  - {url: 'https://modretro.com/collections/all', http_status: 200}
+  - {url: 'https://developer.modretro.com/', http_status: 0, note: 'no DNS — no developer portal exists'}

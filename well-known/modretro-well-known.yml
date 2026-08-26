@@ -1,0 +1,79 @@
+generated: '2026-08-26'
+method: probed
+source: https://modretro.com/.well-known/
+note: >-
+  ModRetro's storefront runs on Shopify. The /.well-known/ documents below are served from
+  modretro.com — the company's own domain — and are shop-specific: the OIDC/OAuth issuer carries
+  ModRetro's Shopify shop id (82920341806), its authorization, token, logout and JWKS endpoints are
+  on orders.modretro.com, and the UCP merchant profile names ModRetro as the Google Pay merchant
+  (merchant_name "ModRetro", merchant_origin "modretro.com"). Platform-delivered, ModRetro-scoped —
+  recorded the same way a templated {site}/wp-json surface is.
+hit_count: 3
+hosts:
+  - host: https://modretro.com
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: application/json
+        file: modretro-openid-configuration.json
+        note: Shopify Customer Accounts OIDC discovery for shop 82920341806.
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: application/json
+        file: modretro-oauth-authorization-server.json
+        note: RFC 8414 authorization-server metadata; identical body to the OIDC document.
+      - path: /.well-known/ucp
+        status: 200
+        content_type: application/json
+        file: modretro-ucp.json
+        note: >-
+          Universal Commerce Protocol merchant profile (version 2026-04-08). Not an IANA-registered
+          well-known name; published by ucp.dev and advertised in ModRetro's own robots.txt and
+          /agents.md. Declares the MCP transport endpoint, capabilities and payment handlers.
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://support.modretro.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://forums.modretro.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 200
+        note: >-
+          SOFT 200 — not a document. The forum sits behind a "Checking your browser" interstitial
+          (Stile challenge) that answers 200 with a 2.9KB HTML body for every /.well-known/* path,
+          including /.well-known/api-catalog and /.well-known/oauth-authorization-server. No file
+          saved and no pointer emitted.
+      - path: /.well-known/api-catalog
+        status: 200
+        note: Same challenge HTML shell as above. Not a document.
+soft_404_control:
+  host: https://forums.modretro.com
+  probe: /.well-known/openid-configuration
+  bytes: 2941
+  body: challenge interstitial HTML

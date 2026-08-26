@@ -1,0 +1,45 @@
+generated: '2026-08-26'
+method: searched
+source: https://github.com/ModRetro/oss-chromatic-console-fpga/blob/main/CHANGELOG.md
+scope: firmware
+note: >-
+  ModRetro publishes no API changelog — the commerce API is a UCP/Shopify surface it does not
+  version itself. What it does publish, in the open and with dates, is the Chromatic firmware
+  changelog: a Keep-a-Changelog-shaped CHANGELOG.md plus tagged GitHub releases carrying the same
+  notes, in the GPL-3.0 FPGA design repository. Recorded here as the provider's real dated
+  changelog, explicitly scoped to firmware so nobody reads it as API release notes.
+scheme: 'major.minor firmware tags (vNN.N)'
+current_version: v18.8
+format: keep-a-changelog
+sources:
+  - https://github.com/ModRetro/oss-chromatic-console-fpga/blob/main/CHANGELOG.md
+  - https://github.com/ModRetro/oss-chromatic-console-fpga/releases
+  - https://support.modretro.com/en_us/chromatic-firmware-updater-ryhoYnzCx.md
+entries:
+  - version: v18.8
+    date: '2025-12-25'
+    breaking: false
+    changed: ['Enable audio until the ESP32 can configure the FPGA']
+    fixed: ['IO0/En control sometimes fails to boot the ESP32', 'The FPGA sometimes resets during play']
+  - version: v18.7
+    date: '2025-10-19'
+    breaking: false
+    fixed: ['Custom sprite palettes distinguish between obj0 and obj1']
+  - version: v18.6
+    date: '2025-09-28'
+    breaking: false
+    added: ['Support for streaming audio to PCs over USB', 'Custom palettes can override the existing palette after boot']
+    changed: ['Inverted the audio output polarity to match GBC']
+    fixed: ['Reworked the design of frame blending']
+  - version: v18.5
+    date: '2025-05-21'
+    breaking: false
+    added: ['Support for streaming on macOS and Discord']
+    changed: ['Default palettes for A+B+Right and A+B+Left', 'Tuned settings for the Chromatic Power Core']
+    fixed: ['LED indicator correct for AA, USB and Power Core', 'Clock skip in titles with an RTC', 'Save-data loss in some titles', 'Streaming no longer requires flipping video in OBS']
+  - version: v18.4
+    date: '2025-02-27'
+    breaking: false
+    added: ['Option to ignore diagonal D-Pad inputs', 'Option to use background palette 0 color', 'Option to set low-battery icon behavior']
+    changed: ['Tuned battery thresholds for 1.2V NiMH AA cells']
+    fixed: ['Reduced backlight flashing on near-depleted power', 'Kirby Tilt-n-Tumble support', 'Linux streaming support']
