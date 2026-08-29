@@ -11,6 +11,17 @@ description: >-
   from its own robots.txt, /agents.md and /llms.txt, with idempotency required on checkout
   completion and an explicit human-approval rule on payment. Separately, ModRetro publishes the
   Chromatic's FPGA and MCU design files on GitHub under GPL-3.0 with a dated firmware changelog.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://modretro.com/cdn/shop/files/MR_SocialShare_ModRetro.png?v=1780328409&width=1200
 url: https://raw.githubusercontent.com/api-evangelist/modretro/refs/heads/main/apis.yml
 x-type: company
