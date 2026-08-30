@@ -37,6 +37,17 @@ tags:
 - Hardware
 - E-Commerce
 - Agentic Commerce
+- MCP
+- Universal Commerce Protocol
+- Open Source Hardware
+tags_raw:
+- Company
+- Consumer Electronics
+- Gaming
+- Retro Gaming
+- Hardware
+- E-Commerce
+- Agentic Commerce
 - Model Context Protocol
 - Universal Commerce Protocol
 - Open Source Hardware
@@ -58,6 +69,13 @@ apis:
   humanURL: https://modretro.com/agents.md
   baseURL: https://modretro.com/api/ucp/mcp
   tags:
+  - Agentic Commerce
+  - MCP
+  - Universal Commerce Protocol
+  - E-Commerce
+  - Catalog
+  - Checkout
+  tags_raw:
   - Agentic Commerce
   - Model Context Protocol
   - Universal Commerce Protocol
