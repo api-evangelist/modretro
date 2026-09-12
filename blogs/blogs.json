@@ -2,6 +2,13 @@
   "repo": "modretro",
   "feeds": [
     {
+      "source": "https://modretro.com/blogs/blog",
+      "feed_url": "https://modretro.com/blogs/blog.atom",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    },
+    {
       "source": "https://forums.modretro.com/",
       "feed_url": "https://forums.modretro.com/",
       "title": "",
@@ -9,13 +16,13 @@
       "method": "none"
     },
     {
-      "source": "https://modretro.com/blogs/blog",
+      "source": "https://modretro.com/blogs/blog.atom",
       "feed_url": "https://modretro.com/blogs/blog.atom",
       "title": "",
       "saved": 0,
-      "method": "discovered"
+      "method": "feed"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-08-30T22:33:40Z"
+  "post_count": 25,
+  "fetched": "2026-09-06T19:17:18Z"
 }
