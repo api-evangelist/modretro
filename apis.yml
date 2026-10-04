@@ -112,6 +112,9 @@ apis:
     url: errors/modretro-problem-types.yml
   - type: DataModel
     url: data-model/modretro-data-model.yml
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 common:
 - type: DomainSecurity
   url: security/modretro-domain-security.yml
